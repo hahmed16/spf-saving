@@ -87,7 +87,6 @@
                                     </optgroup>
                                     <!-- General -->
                                     <optgroup label="أسباب عامة">
-                                        <option value="5" class="role-staff d-none">وفاة المدخر (للموظف المختص)</option>
                                         <option value="8">الخروج النهائي من نظام الادخار</option>
                                     </optgroup>
                                 </select>
@@ -141,8 +140,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const role = localStorage.getItem('spf-user-role') || 'saver';
-            if (role === 'employer') {
-                document.body.innerHTML = '<div class="container mt-5 text-center"><div class="alert alert-warning">عذراً، طلب الصرف متاح فقط للمدخرين الأفراد.</div><a href="01-dashboard.html" class="btn btn-spf">العودة للوحة التحكم</a></div>';
+            if (role === 'employer' || role === 'staff') {
+                document.body.innerHTML = '<div class="container mt-5 text-center"><div class="alert alert-warning">عذراً، طلب الصرف متاح فقط للمدخرين الأفراد ولا يظهر لموظفي الصندوق أو أصحاب العمل.</div><a href="01-dashboard.html" class="btn btn-spf">العودة للوحة التحكم</a></div>';
                 return;
             }
 
@@ -162,9 +161,7 @@
 
         function checkReason() {
             const reason = document.getElementById('disbursementReason').value;
-            if (reason === '5') {
-                window.location.href = '11-deceased-workflow.html';
-            } else if (reason === '8') {
+            if (reason === '8') {
                 window.location.href = '13-exit-system.html';
             }
         }

@@ -31,7 +31,7 @@
         <!-- Role: SAVER -->
         <div class="role-section role-saver">
             <div class="row justify-content-center">
-                <div class="col-lg-6">
+                <div class="col-lg-9">
                     <div class="spf-card">
                         <div class="card-header-custom">إيداع جديد (الخدمة الذاتية)</div>
                         <div class="card-body">
@@ -50,36 +50,68 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <label class="form-label">طريقة الدفع</label>
-                                    <div class="row g-3">
-                                        <div class="col-6">
-                                            <div class="category-card py-3 py-2 border-2 selected" id="cardMethod" onclick="selectMethod('card')">
-                                                <i class="fas fa-credit-card mb-2 d-block"></i>
-                                                <span class="small fw-700">بطاقة بنكية</span>
+                                    <h6 class="fw-800 mb-3 text-spf">طريقة الدفع</h6>
+                                    <div class="payment-methods-grid mb-4">
+                                        <label class="payment-method-card">
+                                            <input type="radio" name="paymentMethod" value="card" checked>
+                                            <div class="payment-method-icon"><i class="fas fa-credit-card"></i></div>
+                                            <span class="payment-method-label">بطاقة بنكية</span>
+                                        </label>
+                                        <label class="payment-method-card">
+                                            <input type="radio" name="paymentMethod" value="wallet">
+                                            <div class="payment-method-icon"><i class="fas fa-wallet"></i></div>
+                                            <span class="payment-method-label">المحفظة الرقمية</span>
+                                        </label>
+                                        <label class="payment-method-card">
+                                            <input type="radio" name="paymentMethod" value="transfer">
+                                            <div class="payment-method-icon"><i class="fas fa-university"></i></div>
+                                            <span class="payment-method-label">تحويل بنكي</span>
+                                        </label>
+                                        <label class="payment-method-card">
+                                            <input type="radio" name="paymentMethod" value="cheque">
+                                            <div class="payment-method-icon"><i class="fas fa-money-check"></i></div>
+                                            <span class="payment-method-label">شيك بنكي</span>
+                                        </label>
+                                    </div>
+
+                                    <div id="cardDetails" class="mb-4 p-3 bg-light rounded">
+                                        <div class="row g-3">
+                                            <div class="col-12">
+                                                <label class="form-label small">رقم البطاقة</label>
+                                                <input type="text" class="form-control" placeholder="**** **** **** ****">
                                             </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="category-card py-3 py-2 border-2" id="walletMethod" onclick="selectMethod('wallet')">
-                                                <i class="fas fa-wallet mb-2 d-block"></i>
-                                                <span class="small fw-700">المحفظة الرقمية</span>
+                                            <div class="col-6">
+                                                <label class="form-label small">تاريخ الانتهاء</label>
+                                                <input type="text" class="form-control" placeholder="MM/YY">
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="form-label small">رمز التحقق (CVV)</label>
+                                                <input type="text" class="form-control" placeholder="123">
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div id="cardDetails" class="mb-4 p-3 bg-light rounded">
-                                    <div class="row g-3">
-                                        <div class="col-12">
-                                            <label class="form-label small">رقم البطاقة</label>
-                                            <input type="text" class="form-control" placeholder="**** **** **** ****">
+                                    <div class="cheque-details-fields mb-4">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label small">اسم البنك</label>
+                                                <input type="text" class="form-control" placeholder="أدخل اسم البنك">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label small">رقم الشيك</label>
+                                                <input type="text" class="form-control" placeholder="00012345">
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label small">تاريخ الشيك</label>
+                                                <input type="date" class="form-control">
+                                            </div>
                                         </div>
-                                        <div class="col-6">
-                                            <label class="form-label small">تاريخ الانتهاء</label>
-                                            <input type="text" class="form-control" placeholder="MM/YY">
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="form-label small">رمز التحقق (CVV)</label>
-                                            <input type="text" class="form-control" placeholder="123">
+                                    </div>
+
+                                    <div id="chequeNote" class="cheque-note mb-4">
+                                        <i class="fas fa-exclamation-triangle mt-1"></i>
+                                        <div>
+                                            <strong>ملاحظة هامة:</strong> عند الدفع بالشيك، لا يتأثر حساب المدخر ولا تظهر المبالغ في الرصيد إلا بعد إتمام عملية التسوية المالية للشيك بنجاح، وليس بشكل لحظي كما في طرق الدفع اللحظية الأخرى.
                                         </div>
                                     </div>
                                 </div>
@@ -189,33 +221,55 @@
                             <i class="fas fa-cog"></i>
                             <span>اختر وضع توزيع المبالغ المفضل لديك.</span>
                         </div>
-                        <div class="row g-4 mb-4">
-                            <div class="col-md-4">
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-3">
                                 <div class="action-card text-start p-3 h-100" onclick="selectMode('fixed')">
                                     <div class="action-title"><input type="radio" name="mode" checked> مبلغ ثابت للجميع</div>
-                                    <div class="action-desc pt-2">إيداع مبلغ موحد لكل عامل مختار.</div>
-                                    <div class="mt-2"><input type="number" class="form-control" value="100"></div>
+                                    <div class="mt-2 text-muted x-small">إيداع مبلغ موحد لكل عامل.</div>
+                                    <div class="mt-2"><input type="number" id="fixedAmountInput" class="form-control form-control-sm" value="100" oninput="applyDistribution()"></div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="action-card text-start p-3 h-100" onclick="selectMode('individual')">
                                     <div class="action-title"><input type="radio" name="mode"> مبالغ منفردة</div>
-                                    <div class="action-desc pt-2">تحديد مبلغ مختلف لكل عامل على حدة.</div>
+                                    <div class="mt-2 text-muted x-small">تحديد مبلغ لكل عامل يدوياً.</div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <div class="action-card text-start p-3 h-100" onclick="selectMode('percentage')">
+                                    <div class="action-title"><input type="radio" name="mode"> نسبة من الأجر</div>
+                                    <div class="mt-2 text-muted x-small">احتساب مبالغ بناء على نسبة %.</div>
+                                    <div class="mt-2"><input type="number" id="percentInput" class="form-control form-control-sm" placeholder="%" oninput="applyDistribution()"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
                                 <div class="action-card text-start p-3 h-100" onclick="selectMode('divide')">
-                                    <div class="action-title"><input type="radio" name="mode"> تقسيم مبلغ إجمالي</div>
-                                    <div class="action-desc pt-2">توزيع مبلغ كلي بالتساوي على العمال.</div>
-                                    <div class="mt-2"><input type="number" class="form-control" placeholder="المبلغ الإجمالي"></div>
+                                    <div class="action-title"><input type="radio" name="mode"> تقسيم إجمالي</div>
+                                    <div class="mt-2 text-muted x-small">توزيع مبلغ كلي بالتساوي.</div>
+                                    <div class="mt-2"><input type="number" id="totalDivideInput" class="form-control form-control-sm" placeholder="إجمالي" oninput="applyDistribution()"></div>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="table-responsive mb-4">
+                            <table class="spf-table">
+                                <thead>
+                                    <tr>
+                                        <th>العامل</th>
+                                        <th>الأجر الأساسي</th>
+                                        <th>المبلغ المودع</th>
+                                        <th>الحالة</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="wizardWorkerList">
+                                    <!-- Dynamic Workers -->
+                                </tbody>
+                            </table>
+                        </div>
+
                         <div class="running-summary mb-4">
-                            <div class="summary-item">العمال المختارون: <span id="empSelCount">2</span></div>
-                            <div class="summary-item">المبلغ لكل عامل: 100 ر.ع</div>
-                            <div class="summary-item h5 mb-0">الإجمالي: 200 ر.ع</div>
+                            <div class="summary-item">العمال المختارون: <span id="empSelCount">0</span></div>
+                            <div class="summary-item h5 mb-0">الإجمالي: <span id="finalTotal">0.000</span> <img src="omr_icon.svg" class="currency-icon" alt=""></div>
                         </div>
 
                         <div class="d-flex justify-content-between">
@@ -227,17 +281,76 @@
                     <!-- Step 3 Content -->
                     <div id="employerStep3" class="d-none">
                         <div class="row justify-content-center">
-                            <div class="col-md-6">
+                            <div class="col-md-9">
                                 <div class="bg-light p-4 rounded mb-4 text-center">
                                     <h6 class="text-muted mb-2">إجمالي المبلغ المطلوب دفعه</h6>
-                                    <h2 class="fw-800 text-spf">200.000 <img src="omr_icon.svg" class="currency-icon" alt="ر.ع"></h2>
+                                    <h2 class="fw-800 text-spf"><span class="total-display">0.000</span> <img src="omr_icon.svg" class="currency-icon" alt="ر.ع"></h2>
                                 </div>
                                 <div class="mb-4">
-                                    <label class="form-label">اختر حساب الدفع (المؤسسة)</label>
-                                    <select class="form-select mb-3">
-                                        <option>بنك مسقط - ****1234</option>
-                                        <option>البنك الوطني العماني - ****5678</option>
-                                    </select>
+                                    <h6 class="fw-800 mb-3 text-spf">طريقة الدفع</h6>
+                                    <div class="payment-methods-grid mb-4">
+                                        <label class="payment-method-card">
+                                            <input type="radio" name="paymentMethod" value="card" checked>
+                                            <div class="payment-method-icon"><i class="fas fa-credit-card"></i></div>
+                                            <span class="payment-method-label">بطاقة بنكية</span>
+                                        </label>
+                                        <label class="payment-method-card">
+                                            <input type="radio" name="paymentMethod" value="wallet">
+                                            <div class="payment-method-icon"><i class="fas fa-wallet"></i></div>
+                                            <span class="payment-method-label">المحفظة الرقمية</span>
+                                        </label>
+                                        <label class="payment-method-card">
+                                            <input type="radio" name="paymentMethod" value="transfer">
+                                            <div class="payment-method-icon"><i class="fas fa-university"></i></div>
+                                            <span class="payment-method-label">تحويل بنكي</span>
+                                        </label>
+                                        <label class="payment-method-card">
+                                            <input type="radio" name="paymentMethod" value="cheque">
+                                            <div class="payment-method-icon"><i class="fas fa-money-check"></i></div>
+                                            <span class="payment-method-label">شيك بنكي</span>
+                                        </label>
+                                    </div>
+
+                                      <div id="cardDetails" class="mb-4 p-3 bg-light rounded">
+                                        <div class="row g-3">
+                                            <div class="col-12">
+                                                <label class="form-label small">رقم البطاقة</label>
+                                                <input type="text" class="form-control" placeholder="**** **** **** ****">
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="form-label small">تاريخ الانتهاء</label>
+                                                <input type="text" class="form-control" placeholder="MM/YY">
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="form-label small">رمز التحقق (CVV)</label>
+                                                <input type="text" class="form-control" placeholder="123">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="cheque-details-fields mb-4">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label small">اسم البنك</label>
+                                                <input type="text" class="form-control" placeholder="أدخل اسم البنك">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label small">رقم الشيك</label>
+                                                <input type="text" class="form-control" placeholder="00012345">
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label small">تاريخ الشيك</label>
+                                                <input type="date" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="chequeNote" class="cheque-note mb-4">
+                                        <i class="fas fa-exclamation-triangle mt-1"></i>
+                                        <div>
+                                            <strong>ملاحظة هامة:</strong> عند الدفع بالشيك، لا يتأثر حساب المدخر ولا تظهر المبالغ في الرصيد إلا بعد إتمام عملية التسوية المالية للشيك بنجاح.
+                                        </div>
+                                    </div>
                                     <div class="alert alert-warning small py-2">يجب توفر رصيد كافي في حساب المؤسسة لإتمام العملية.</div>
                                 </div>
                                 <div class="d-flex gap-3">
@@ -256,9 +369,13 @@
     <script src="common.js"></script>
     <script>
         function selectMethod(method) {
-            document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
-            document.getElementById(method + 'Method').classList.add('selected');
-            document.getElementById('cardDetails').style.display = (method === 'card') ? 'block' : 'none';
+            // Deprecated in favor of shared common.js logic but keeping for UI compatibility
+            document.querySelectorAll('.payment-method-card').forEach(c => {
+                const input = c.querySelector('input');
+                if (input.value === method) input.checked = true;
+            });
+            // Trigger change manually
+            document.querySelector(`input[value="${method}"]`).dispatchEvent(new Event('change', { bubbles: true }));
         }
 
         function processDeposit() {
@@ -269,6 +386,55 @@
         }
 
         function nextStep(step) {
+            if (step === 2) {
+                // Populate Step 2 with Selected Workers
+                const selected = document.querySelectorAll('.emp-worker-check:checked');
+                if (selected.length === 0) {
+                    spf.showError('يرجى اختيار عامل واحد على الأقل للمتابعة.');
+                    return;
+                }
+                const list = document.getElementById('wizardWorkerList');
+                list.innerHTML = '';
+                selected.forEach(check => {
+                    const row = check.closest('tr');
+                    const name = row.cells[1].innerText;
+                    const salary = 800; // Simulated
+                    list.innerHTML += `
+                        <tr data-salary="${salary}">
+                            <td>${name}</td>
+                            <td>${salary} <img src="omr_icon.svg" class="currency-icon" alt=""></td>
+                            <td><input type="number" class="form-control form-control-sm worker-amount-input" value="100" min="0" oninput="calculateTotal()"></td>
+                            <td class="status-cell"></td>
+                        </tr>
+                    `;
+                });
+                calculateTotal();
+            }
+
+            if (step === 3) {
+                // Final validation: amount > 100
+                const amounts = document.querySelectorAll('.worker-amount-input');
+                let allValid = true;
+                amounts.forEach(input => {
+                    const val = parseFloat(input.value) || 0;
+                    const row = input.closest('tr');
+                    const statusCell = row.querySelector('.status-cell');
+                    if (val < 100) {
+                        input.classList.add('worker-invalid');
+                        statusCell.innerHTML = '<span class="text-danger small"><i class="fas fa-times-circle"></i> اقل من 100</span>';
+                        allValid = false;
+                    } else {
+                        input.classList.remove('worker-invalid');
+                        statusCell.innerHTML = '<span class="text-success small"><i class="fas fa-check-circle"></i> مقبول</span>';
+                    }
+                });
+
+                if (!allValid) {
+                    spf.showError('عذراً، يجب أن يكون مبلغ الإيداع لكل عامل 100 ريال أو أكثر للمتابعة.');
+                    return;
+                }
+            }
+
             document.getElementById('employerStep1').classList.add('d-none');
             document.getElementById('employerStep2').classList.add('d-none');
             document.getElementById('employerStep3').classList.add('d-none');
@@ -280,23 +446,64 @@
             for(let i=1; i<=3; i++) {
                 const s = document.getElementById('step' + i);
                 const l = document.getElementById('line' + i);
-                if(i < step) {
-                    s.classList.add('done');
-                    if(l) l.classList.add('done');
-                } else if(i === step) {
-                    s.classList.add('active');
-                    if(l) l.classList.remove('done');
+                if(s) {
+                    if(i < step) {
+                        s.classList.add('done');
+                        if(l) l.classList.add('done');
+                    } else if(i === step) {
+                        s.classList.add('active');
+                        if(l) l.classList.remove('done');
+                    }
                 }
             }
         }
 
-        // Selection for employer
-        const selectAll = document.getElementById('selectAllWorkers');
-        if(selectAll) {
-            selectAll.addEventListener('change', function() {
-                document.querySelectorAll('.emp-worker-check').forEach(c => c.checked = this.checked);
+        let currentMode = 'fixed';
+        function selectMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.action-card').forEach(c => {
+                c.classList.toggle('selected', c.getAttribute('onclick').includes(mode));
+                const radio = c.querySelector('input[type="radio"]');
+                if (radio) radio.checked = c.classList.contains('selected');
             });
+            applyDistribution();
         }
+
+        function applyDistribution() {
+            const amounts = document.querySelectorAll('.worker-amount-input');
+            const totalDivide = parseFloat(document.getElementById('totalDivideInput').value) || 0;
+            const fixed = parseFloat(document.getElementById('fixedAmountInput').value) || 0;
+            const percent = parseFloat(document.getElementById('percentInput').value) || 0;
+
+            amounts.forEach(input => {
+                if (currentMode === 'fixed') input.value = fixed;
+                if (currentMode === 'divide') input.value = (totalDivide / amounts.length).toFixed(3);
+                if (currentMode === 'percentage') {
+                    const salary = parseFloat(input.closest('tr').dataset.salary);
+                    input.value = (salary * (percent / 100)).toFixed(3);
+                }
+                // 'individual' does nothing, allows manual entry
+            });
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            let total = 0;
+            const amounts = document.querySelectorAll('.worker-amount-input');
+            amounts.forEach(input => {
+                total += parseFloat(input.value) || 0;
+            });
+            document.getElementById('empSelCount').innerText = amounts.length;
+            document.getElementById('finalTotal').innerText = total.toFixed(3);
+            document.querySelectorAll('.total-display').forEach(el => el.innerText = total.toFixed(3));
+        }
+
+        // Initialize inquiries
+        document.addEventListener('DOMContentLoaded', function() {
+            spf.renderInquiries([
+                "هل يتحمل الصندوق النسبة التي يتم اقتطاعها من إجمالي المبلغ المدفوع؟ في حالة رغبة صاحب العمل في دفع مبالغ كبيرة وبناء عليه النسبة المقتطعة لصالح VISA سوف تكون مبلغ كبير أيضاً."
+            ]);
+        });
     </script>
 </body>
 </html>

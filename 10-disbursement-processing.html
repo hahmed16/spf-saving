@@ -91,7 +91,7 @@
                                         <td class="fw-700">سعيد بن راشد المعمري</td>
                                         <td>88223344</td>
                                         <td>2,150.000 <img src="omr_icon.svg" class="currency-icon" alt="ر.ع"></td>
-                                        <td>مغادرة السلطنة (غير عماني)</td>
+                                        <td>استحقاق معاش تقاعدي</td>
                                         <td>20/02/2026</td>
                                         <td><span class="badge-status pending">قيد المراجعة</span></td>
                                         <td>
@@ -188,6 +188,14 @@
             if (type === 'reject') spf.showError('تم رفض الطلب كما طلبت. سيتم إشعار المدخر بذلك.');
             if (type === 'docs') spf.showSuccess('تم إرسال طلب للمدخر لتوفير المستندات المطلوبة.');
         }
+
+        // Initialize inquiries
+        document.addEventListener('DOMContentLoaded', function() {
+            spf.renderInquiries([
+                "ما هي الدورة المستندية لمعالجة طلبات الصرف؟ المقترح أن تكون إلكترونية 100% دون تدخل بشري",
+                "تتنوع مصادر الإيداع في حساب الادخار، فما هي ضوابط الصرف الخاصة بكل مصدر ؟"
+            ]);
+        });
     </script>
 </body>
 </html>

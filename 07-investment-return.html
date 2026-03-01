@@ -75,8 +75,8 @@
                                     </div>
                                     <div class="timeline-item">
                                         <div class="time">22/02/2026 - 11:30 AM</div>
-                                        <div class="action"><i class="fas fa-check-double me-2 text-primary"></i> تم التدقيق والمراجعة</div>
-                                        <div class="user">بواسطة: ناصر الهنائي</div>
+                                        <div class="action"><i class="fas fa-check-double me-2 text-primary"></i> تم التدقيق والمراجعة من قسم المخاطر</div>
+                                        <div class="user">بواسطة: ناصر الهنائي (مدير المخاطر)</div>
                                     </div>
                                     <div class="timeline-item" style="border-right-color: var(--spf-gold);">
                                         <div class="time">نظام العمل الآلي</div>
@@ -157,6 +157,13 @@
             if (role !== 'staff') {
                 document.body.innerHTML = '<div class="container mt-5 text-center"><div class="alert alert-danger">عذراً، هذه الصفحة مخصصة لموظفي الصندوق فقط.</div><a href="01-dashboard.html" class="btn btn-spf">العودة للوحة التحكم</a></div>';
             }
+
+            spf.renderInquiries([
+                "احتساب العائد سنوياً لكن هل يتم توزيع هذا العائد واحتسابه شهرياً أم سنوياً (كانت هناك آراء مختلفة في حين أن المادة القانونية أوضحت أن التوزيع شهرياً).",
+                "ما هي آلية احتساب العائد ؟ هل على إجمالي المبالغ في الحساب أم إجمالي مصادر معينة ؟ وهل يتم احتساب العائد على الإجمالي مشتملاً على العوائد المحتسبة سابقاً أيضاً أم لا؟",
+                "هل كل مصدر من مصادر الإيداع له سقف خاص به 36000 أم أن هذا السقف للحساب ككل بتنوع مصادره ؟",
+                "هل من الممكن أن يتم تحديد عائد الاستثمار لكل مصدر من مصادر الادخار على حدة ؟ أن أنه عائد ثابت دائماً لكل المصادر ؟"
+            ]);
         });
     </script>
 </body>

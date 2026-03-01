@@ -2,7 +2,7 @@
  * SPF Saving System Mockup - Shared Logic
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // 1. Initialize Layout (Navbar & Sidebar)
     initLayout();
 
@@ -66,7 +66,7 @@ function initLayout() {
                 <div class="user-avatar">أ</div>
             </div>
             
-            <a href="01-dashboard.html" class="nav-link">
+            <a href="index.html" class="nav-link">
                 <i class="fas fa-home"></i>
             </a>
         </div>
@@ -76,6 +76,7 @@ function initLayout() {
     <aside class="spf-sidebar" id="mainSidebar">
         <div class="sidebar-header">القائمة الرئيسية</div>
         <ul class="sidebar-nav">
+            <li class="nav-saver nav-employer nav-staff"><a href="index.html" id="link-index"><i class="fas fa-home"></i> الصفحة الرئيسية</a></li>
             <li class="nav-saver nav-employer nav-staff"><a href="01-dashboard.html" id="link-01"><i class="fas fa-th-large"></i> لوحة التحكم</a></li>
             <li class="nav-saver nav-employer"><a href="02-registration.html" id="link-02"><i class="fas fa-user-plus"></i> التسجيل في النظام</a></li>
             
@@ -87,8 +88,7 @@ function initLayout() {
 
             <li class="nav-staff sidebar-category-header mt-3">موظفي الصرف</li>
             <li class="nav-staff"><a href="10-disbursement-processing.html" id="link-10"><i class="fas fa-tasks"></i> معالجة طلبات الصرف</a></li>
-            <li class="nav-staff"><a href="11-deceased-workflow.html" id="link-11"><i class="fas fa-user-shield"></i> مدخرات المتوفين</a></li>
-            <li class="nav-saver nav-staff"><a href="08-disbursement.html" id="link-08"><i class="fas fa-money-check-alt"></i> طلبات الصرف (المدخر)</a></li>
+            <li class="nav-saver"><a href="08-disbursement.html" id="link-08"><i class="fas fa-money-check-alt"></i> طلبات الصرف (المدخر)</a></li>
 
             <li class="nav-staff sidebar-category-header mt-3">موظفي الاستثمار</li>
             <li class="nav-staff"><a href="07-investment-return.html" id="link-07"><i class="fas fa-chart-line"></i> عائد الاستثمار</a></li>
@@ -129,17 +129,17 @@ function initUserToggle() {
             btn.classList.remove('active');
         }
 
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const role = this.getAttribute('data-role');
             localStorage.setItem('spf-user-role', role);
-            
+
             // Highlight active button
             toggleButtons.forEach(b => b.classList.remove('active'));
             this.classList.add('active');
 
             // Refresh UI or trigger callback
             applyRoleVisibility(role);
-            
+
             // Broadcast event for page-specific logic
             const event = new CustomEvent('spfRoleChanged', { detail: { role: role } });
             document.dispatchEvent(event);
@@ -152,7 +152,7 @@ function initUserToggle() {
 
 function applyRoleVisibility(role) {
     document.body.setAttribute('data-user-role', role);
-    
+
     // Sidebar visibility
     const sidebar = document.getElementById('mainSidebar');
     if (sidebar) {
@@ -163,7 +163,7 @@ function applyRoleVisibility(role) {
                 li.style.display = 'none';
             }
         });
-        
+
         // Handle specific case for link-14
         const li14Saver = document.getElementById('li-14-saver');
         if (li14Saver) {
@@ -225,7 +225,7 @@ function highlightActiveLink() {
 
 // Global UI Helpers
 window.spf = {
-    showSuccess: function(message) {
+    showSuccess: function (message) {
         const modalId = 'successModal' + Date.now();
         const modalHTML = `
         <div class="modal fade" id="${modalId}" tabindex="-1">
@@ -246,8 +246,8 @@ window.spf = {
         const modal = new bootstrap.Modal(document.getElementById(modalId));
         modal.show();
     },
-    
-    showError: function(message) {
+
+    showError: function (message) {
         const modalId = 'errorModal' + Date.now();
         const modalHTML = `
         <div class="modal fade" id="${modalId}" tabindex="-1">
@@ -267,5 +267,63 @@ window.spf = {
         document.body.insertAdjacentHTML('beforeend', modalHTML);
         const modal = new bootstrap.Modal(document.getElementById(modalId));
         modal.show();
+    },
+
+    renderInquiries: function (inquiries) {
+        if (!inquiries || !inquiries.length) return;
+
+        const main = document.querySelector('main.spf-main');
+        if (!main) return;
+
+        const html = `
+        <div class="inquiry-panel">
+            <div class="inquiry-header">
+                <i class="fas fa-question-circle"></i>
+                <span>الاستفسارات والتوضيحات</span>
+            </div>
+            <div class="inquiry-body">
+                <ul class="inquiry-list">
+                    ${inquiries.map(item => `<li class="inquiry-item">${item}</li>`).join('')}
+                </ul>
+            </div>
+        </div>`;
+
+        main.insertAdjacentHTML('beforeend', html);
     }
 };
+
+// Handle Cheque Selection Note
+document.addEventListener('change', function (e) {
+    if (e.target && e.target.name === 'paymentMethod') {
+        const val = e.target.value;
+        const container = e.target.closest('form') || document;
+        const chequeNote = container.querySelector('#chequeNote');
+        const chequeFields = container.querySelector('.cheque-details-fields');
+        const cardFields = container.querySelector('#cardDetails');
+
+        // Handle Active Classes
+        container.querySelectorAll('.payment-method-card').forEach(card => {
+            card.classList.toggle('active', card.querySelector('input').checked);
+        });
+
+        // Toggle Note
+        if (chequeNote) {
+            chequeNote.style.display = (val === 'cheque') ? 'flex' : 'none';
+        }
+
+        // Toggle Fields
+        if (chequeFields) {
+            chequeFields.style.display = (val === 'cheque') ? 'block' : 'none';
+        }
+        if (cardFields) {
+            cardFields.style.display = (val === 'card') ? 'block' : 'none';
+        }
+    }
+});
+
+// Initial Active State for payment cards
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.payment-method-card input:checked').forEach(input => {
+        input.closest('.payment-method-card').classList.add('active');
+    });
+});

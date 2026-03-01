@@ -70,6 +70,16 @@ body {
     border-radius: 3px;
 }
 
+/* Hide Scrollbar Utility */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 /* ===== Navbar ===== */
 .spf-navbar {
     background: linear-gradient(135deg, var(--spf-green-dark) 0%, var(--spf-green) 100%);
@@ -1217,4 +1227,125 @@ body {
         margin: 0;
         padding: 10px;
     }
+}
+
+/* ===== Inquiry Panel ===== */
+.inquiry-panel {
+    margin-top: 40px;
+    background: #fff;
+    border-radius: var(--spf-radius);
+    border: 1px solid var(--spf-border);
+    border-right: 5px solid var(--spf-gold);
+    overflow: hidden;
+    box-shadow: var(--spf-shadow);
+}
+
+.inquiry-header {
+    background: var(--spf-gold-light);
+    padding: 12px 20px;
+    font-weight: 700;
+    color: #8d6e1f;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.inquiry-body {
+    padding: 20px;
+}
+
+.inquiry-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.inquiry-item {
+    position: relative;
+    padding-right: 25px;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+    color: var(--spf-text);
+}
+
+.inquiry-item:last-child {
+    margin-bottom: 0;
+}
+
+.inquiry-item::before {
+    content: '\f059';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 0;
+    top: 2px;
+    color: var(--spf-gold);
+    font-size: 0.9rem;
+}
+
+/* Payment Methods Standard */
+.payment-methods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+}
+
+.payment-method-card {
+    border: 1.5px solid var(--spf-border);
+    border-radius: var(--spf-radius-sm);
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--spf-transition);
+}
+
+.payment-method-card:hover,
+.payment-method-card.active {
+    border-color: var(--spf-green);
+    background: var(--spf-green-lighter);
+}
+
+.payment-method-card input {
+    display: none;
+}
+
+.payment-method-icon {
+    font-size: 1.5rem;
+    color: var(--spf-green);
+    margin-bottom: 8px;
+}
+
+.payment-method-icon i.fa-wallet {
+    color: #27ae60;
+}
+
+.cheque-details-fields {
+    background: #f8f9fa;
+    border: 1px dashed var(--spf-border);
+    border-radius: var(--spf-radius-sm);
+    padding: 20px;
+    margin-top: 15px;
+    display: none;
+}
+
+.payment-method-label {
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: block;
+}
+
+.cheque-note {
+    font-size: 0.82rem;
+    color: #856404;
+    background: #fff3cd;
+    padding: 10px 15px;
+    border-radius: var(--spf-radius-sm);
+    margin-top: 15px;
+    display: none;
+}
+
+.cheque-note.show {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
 }

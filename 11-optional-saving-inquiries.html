@@ -180,231 +180,176 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="common.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const STORAGE_KEY = 'spf-inquiry-decisions-v1';
+      document.addEventListener('DOMContentLoaded', function () {
+    const STORAGE_KEY = 'spf-inquiry-decisions-v1';
 
-            const optionalGroups = [
-                {
-                    service: "التسجيل في نظام الادخار الاختياري",
-                    inquiries: [
-                        "هل يحق لغير العماني ممن اودع فائض اشتراكاته أن يقوم هو بالادخار لنفسه أيضا أم يقتصر الإيداع في حسابه على جهة العمل وإن كان يسمح له بالادخار لنفسه فهل هناك ضوابط لذلك حيث إنه تم تحديد هذا الاشتراط \"العمال غير العمانيين للمدخرات التي تتجاوز الحد الإلزامي\"؟",
-                        "هل يوجد فائض اشتراكات أيضا لغير العماني ؟",
-                        "تم الإشارة إلى حالات التسجيل المباشر طبقاً للمادة 99 من القانون ولكن ماذا يترتب على هذا التسجيل المباشر: ١ – كل مؤمن عليه تتجاوز اشتراكاته المسددة في فرع تأمين كبار السن والعجز والوفاة الاشتراكات المحتسبة على سقف أجر الاشتراك. ٢ – كل مؤمن عليه يفقد الجنسية العمانية أو تسحب منه أو تسقط عنه ولم تتوفر في شأنه شروط استحقاق المعاش قبل الفقد أو السحب أو الإسقاث. ٣ – كل مؤمن عليه منتسب لأي برنامج تكميلي تم إيقاف العمل به وتحويل أصوله إلى نظام الادخار.",
-                        "تم التأكيد على أن فائض الاشتراك يكون فقط في حالة تعدد العقود ولا توجد أي حالات أخرى.",
-                        "ما هي آليات الاتفاقيات مع أصحاب العمل للخصم المباشر في تواريخ محددة؟",
-                        "في حالة تسجيل أصحاب العمل لعدد من العمال سواء كان بموجب اتفاقية أم لا، هل تخضع لضوابط حد السقف المسموح به وكذلك الحد الأدنى أم لا؟"
-                    ]
-                },
-                {
-                    service: "تفاصيل حساب الادخار الاختياري",
-                    inquiries: [
-                        "التحويل بين مصادر الإيداع: هل يمكن تحويل المبالغ بين رصيد الإيداع الذاتي ورصيد إيداعات صاحب العمل؟",
-                        "تعدد جهات العمل: إمكانية الإيداع في حساب المدخر من أكثر من جهة عمل واحدة (نظام تعدد العقود).",
-                        "توقيت ظهور المبالغ: متى تنعكس المبالغ المودعة في الرصيد؟ (تنبيه: إيداعات الشيكات تظهر فقط عند التسوية المالية)."
-                    ]
-                },
-                {
-                    service: "إيداع مبالغ في نظام الادخار",
-                    inquiries: [
-                        "هل يتحمل الصندوق النسبة التي يتم اقتطاعها من إجمالي المبلغ المدفوع؟ في حالة رغبة صاحب العمل في دفع مبالغ كبيرة وبناء عليه النسبة المقتطعة لصالح VISA سوف تكون مبلغ كبير أيضاً."
-                    ]
-                },
-                {
-                    service: "سداد الالتزامات المالية من المدخرات",
-                    inquiries: [
-                        "ما هي آليات وضوابط الخصم التلقائي من حساب المدخر بشكل تلقائي لسداد الالتزامات المستحقة عليه والمشار إليها في المادة 111 من اللائحة؟",
-                        "تم الإشارة أيضاً في المادة 111 إلى أنه \"يجوز للمدخر استخدام مدخراته لسداد الاشتراكات لفرع كبار السن والعجز والوفاة وفرع تأمين إصابات العمل والأمراض المهنية، إذا كان الالتزام بسداد الاشتراكات على المؤمن عليه، أو لسداد أي التزام مالي يترتب عليه للصندوق.\". وبناء عليه، ما هي الاشتراكات التي يلتزم المؤمن عليه بسدادها؟"
-                    ]
-                },
-                {
-                    service: "إدارة عوائد الاستثمار السنوية",
-                    inquiries: [
-                        "احتساب العائد سنوياً لكن هل يتم توزيع هذا العائد واحتسابه شهرياً أم سنوياً (كانت هناك آراء مختلفة في حين أن المادة القانونية أوضحت أن التوزيع شهرياً).",
-                        "ما هي آلية احتساب العائد ؟ هل على إجمالي المبالغ في الحساب أم إجمالي مصادر معينة ؟ وهل يتم احتساب العائد على الإجمالي مشتملاً على العوائد المحتسبة سابقاً أيضاً أم لا؟",
-                        "هل كل مصدر من مصادر الإيداع له سقف خاص به 36000 أم أن هذا السقف للحساب ككل بتنوع مصادره ؟",
-                        "هل من الممكن أن يتم تحديد عائد الاستثمار لكل مصدر من مصادر الادخار على حدة ؟ أن أنه عائد ثابت دائماً لكل المصادر ؟"
-                    ]
-                },
-                {
-                    service: "معالجة طلبات صرف المدخرات",
-                    inquiries: [
-                        "ما هي الدورة المستندية لمعالجة طلبات الصرف؟ المقترح أن تكون إلكترونية 100% دون تدخل بشري",
-                        "تتنوع مصادر الإيداع في حساب الادخار، فما هي ضوابط الصرف الخاصة بكل مصدر ؟"
-                    ]
-                },
-                {
-                    service: "الخروج من نظام الادخار الاختياري",
-                    inquiries: [
-                        "ما هي ضوابط الخروج من الصندوق؟"
-                    ]
-                }
-            ];
+    // ─── COMMON (shared between optional & mandatory) ───────────────────────
+    const commonGroups = [
+        {
+            service: "العائد واحتساب الأرباح",
+            inquiries: [
+                "احتساب العائد سنوياً لكن هل يتم توزيع هذا العائد واحتسابه شهرياً أم سنوياً (كانت هناك آراء مختلفة في حين أن المادة القانونية أوضحت أن التوزيع شهرياً).",
+                "هل يبدأ احتساب العائد من تاريخ الإيداع أم من دورة شهرية محددة؟",
+                "ما هي آلية احتساب العائد؟ هل على إجمالي المبالغ في الحساب أم إجمالي مصادر معينة، وهل المبالغ المودعة إلزامياً يتم الاحتساب عليها أيضاً؟ وهل يتم احتساب العائد على الإجمالي مشتملاً على العوائد المحتسبة سابقاً أيضاً أم لا؟",
+                "هل من الممكن أن يتم تحديد عائد الاستثمار لكل مصدر من مصادر الادخار على حدة؟ أم أنه عائد ثابت دائماً لكل المصادر؟"
+            ]
+        },
+        {
+            service: "ضوابط الصرف والالتزامات",
+            inquiries: [
+                "تتنوع مصادر الإيداع في حساب الادخار، فما هي ضوابط الصرف الخاصة بكل مصدر؟",
+                "هل يلزم تسوية أية استحقاقات حالية على المدخر قبل الصرف؟",
+                "ما ترتيب الأولوية عند تعدد الالتزامات؟"
+            ]
+        },
+        {
+            service: "الإجراءات والأدوار التشغيلية",
+            inquiries: [
+                "ما هي الدورة المستندية لمعالجة طلبات الصرف؟ المقترح أن تكون إلكترونية 100% دون تدخل بشري.",
+                "ما هي الأدوار المعنية بمعالجة طلبات الادخار (الاختياري والإلزامي)؟"
+            ]
+        }
+    ];
 
-            const mandatoryGroups = [
-                {
-                    service: "الادخار الإلزامي",
-                    inquiries: [
-                        "التسجيل الإلزامي لغير العمانيين في نظام الادخار",
-                        "ما هي الجهات المعتمدة لتسجيل واعتماد عقود العمل غير وزارة العمل حيث تم الإفادة بعدد من القطاعات الأخرى التى لايلزم تسجيل العمال المنتسبين اليها فى وزارة العمل كديوان البلاط السلطاني ووزارة الصحة وبلدية مسقط على سبيل المثال؟",
-                        "هل يتطلب التسجيل أي تدخل أو تأكيد من جهة العمل؟",
-                        "ما الحالات التي يتم فيها التسجيل بأثر رجعي؟",
-                        "الاعتراض على الأجر الأساسي المسجل",
-                        "فقط للتأكيد أن العامل يمكنه التظلم مباشرة على الأجر الأساسي المقروء مباشرة من العقد او الذت تم تسجيله عن طريق الموظف؟",
-                        "آلية احتساب الغرامة عند قبول التظلم وثبوت تسجيل بيانات العامل ببيانات غير صحيحة - هل نسبة ال 8% من اجمالي اشتراكات العامل الواحد أم الجميع حيث إن المادة هى يفرض على كل جهة عمل لم تؤد الاشتراكات المقررة على أساس الأجور الحقيقية لغير العمانيين، أو امتنعت عن سداد الاشتراكات المستحقة للصندوق خلال الأجل المنصوص عليه في المادة (١٠١) من هذه اللائحة، مبلغ إضافي يقدر بنسبة (٨٪) ثمانية في المائة سنويا من إجمالي الاشتراكات الواجب سدادها للصندوق؟",
-                        "ماذا لو أثبتت جهة العمل عدم صحة الاعتراض ومن له الحق في معالجة الطلب حينها؟",
-                        "صرف المدخرات",
-                        "آلية التحويل عند مغادرة العامل السلطنة؟",
-                        "هل يلزم تسوية أية استحقاقات حالية على المدخر قبل الصرف؟",
-                        "الية احتساب العوائد الإضافية، هل شهرية ام سنوية وهل تخضع جميع المصادر لنفس النسبة بما فيها الإلزامي؟",
-                        "فى حالة الصرف عن طريق الأقساط هل يتم احتساب العوائد على الرصيد المتبقي؟",
-                        "تسوية مكافأة نهاية الخدمة عن المدة السابقة على تطبيق نظام الادخار",
-                        "هل توجد مهلة زمنية ملزمة للتسوية؟",
-                        "هل يتطلب موافقة العامل على التحويل ونفترض هنا أنه لابد من وجود قرار يخص كل عامل إما بإقراره باستلام المبلغ وإما تحويل المبلغ لحساب الادخار وأيضا لضمان الشفافية ان يتم تحويل هذه المبلغ عن طريق نظام حماية الأجور؟",
-                        "فرض الغرامات على جهة العمل",
-                        "هل يوجد مسار اعتراض على الغرامات المفروضة؟",
-                        "احتساب 8% بسيطة أم مركبة واتضح ان هناك سببان لهذا النوع من الغرامات فهل احتساب الغرامة موحد للسببين؟",
-                        "ما هي الإجراءات عند عدم السداد؟",
-                        "استخدام المدخرات لسداد الالتزامات المالية",
-                        "ما ترتيب الأولوية عند تعدد الالتزامات؟",
-                        "هل يتم إخطار المدخر قبل الخصم التلقائي؟",
-                        "احتساب وتوزيع عائد الاستثمار السنوي",
-                        "هل يبدأ احتساب العائد من تاريخ الإيداع أم من دورة شهرية محددة؟",
-                        "وقف البرامج التكميلية وتحويلها إلى نظام الادخار",
-                        "ما هي الأدوار المعنية بمعالجة هذا النوع من الطلبات؟"
-                    ]
-                }
-            ];
+    // ─── OPTIONAL (الادخار الاختياري) ────────────────────────────────────────
+    const optionalGroups = [
+        {
+            service: "الادخار الاختياري",
+            inquiries: [
+                "هل يحق لغير العماني ممن أودع فائض اشتراكاته أن يقوم هو بالادخار لنفسه أيضاً أم يقتصر الإيداع في حسابه على جهة العمل؟ حيث إنه تم تقييد هذا الاشتراط \"العمال غير العمانيين للمدخرات التي تتجاوز الحد الإلزامي\"؟",
+                "تم الإشارة إلى حالات التسجيل المباشر طبقاً للمادة 99 من القانون ولكن ماذا يترتب على هذا التسجيل المباشر: ١ – كل مؤمن عليه تتجاوز اشتراكاته المسددة في فرع تأمين كبار السن والعجز والوفاة الاشتراكات المحتسبة على سقف أجر الاشتراك. ٢ – كل مؤمن عليه يفقد الجنسية العمانية أو تسحب منه أو تسقط عنه ولم تتوفر في شأنه شروط استحقاق المعاش قبل الفقد أو السحب أو الإسقاط. ٣ – كل مؤمن عليه منتسب لأي برنامج تكميلي تم إيقاف العمل به وتحويل أصوله إلى نظام الادخار.",
+                "تم التأكيد على أن فائض الاشتراك يكون فقط في حالة تعدد العقود ولا توجد أي حالات أخرى.",
+                "هل يوجد تصور لآلية التعاقد مع أصحاب العمل بحيث يكون الإيداع في حساب العمال بشكل تلقائي شهرياً (الاتفاقيات)؟",
+                "في حالة تسجيل أصحاب العمل لعدد من العمال سواء كان بموجب اتفاقية أم لا، هل تخضع لضوابط حد السقف المسموح به وكذلك الحد الأدنى أم لا؟",
+                "هل يتحمل الصندوق النسبة التي يتم اقتطاعها من إجمالي المبلغ المدفوع؟ في حالة رغبة صاحب العمل في دفع مبالغ كبيرة فإن النسبة المقتطعة لصالح VISA ستكون مبلغاً كبيراً أيضاً.",
+                "تم الإشارة في المادة 111 إلى أنه \"يجوز للمدخر استخدام مدخراته لسداد الاشتراكات لفرع كبار السن والعجز والوفاة وفرع تأمين إصابات العمل والأمراض المهنية، إذا كان الالتزام بسداد الاشتراكات على المؤمن عليه، أو لسداد أي التزام مالي يترتب عليه للصندوق.\". وبناء عليه، ما هي الاشتراكات التي يلتزم المؤمن عليه بسدادها؟",
+                "ما هي آليات وضوابط الخصم التلقائي من حساب المدخر لسداد الالتزامات المستحقة عليه المشار إليها في المادة 111 من اللائحة؟",
+                "هل كل مصدر من مصادر الإيداع له سقف خاص به 36,000 أم أن هذا السقف للحساب ككل بتنوع مصادره؟",
+                "ما هي ضوابط وأسباب الخروج من الصندوق (يلتزم المدخر في حالة خروجه من نظام الادخار أو فقدانه أي شرط من شروط أحكامه، بإخطار الصندوق بذلك على النحو الذي تبينه اللائحة، كما تبين اللائحة الغرامات الإدارية المترتبة على عدم الإخطار.)؟"
+            ]
+        }
+    ];
 
-            function isQuestion(text) {
-                const t = (text || '').trim();
-                return t.endsWith('?') || t.endsWith('؟');
-            }
+    // ─── MANDATORY (الادخار الإلزامي) ────────────────────────────────────────
+    const mandatoryGroups = [
+        {
+            service: "الادخار الإلزامي",
+            inquiries: [
+                "ما هي الجهات المعتمدة لتسجيل واعتماد عقود العمل غير وزارة العمل، حيث تم الإفادة بعدد من القطاعات الأخرى التي لا يلزم تسجيل العمال المنتسبين إليها في وزارة العمل كديوان البلاط السلطاني ووزارة الصحة وبلدية مسقط على سبيل المثال؟",
+                "هل يتطلب التسجيل أي تدخل أو تأكيد من جهة العمل؟",
+                "هل يجب على جميع القطاعات وجهات العمل التسجيل في نظام الادخار الإلزامي أم أنه مسموح ببعض الاستثناءات؟",
+                "ما الحالات التي يتم فيها التسجيل بأثر رجعي؟",
+                "آلية احتساب الغرامة عند قبول التظلم وثبوت تسجيل بيانات العامل ببيانات غير صحيحة — هل نسبة الـ 8% من إجمالي اشتراكات العامل الواحد أم الجميع؟ حيث إن المادة تنص على: يُفرض على كل جهة عمل لم تؤدِّ الاشتراكات المقررة على أساس الأجور الحقيقية لغير العمانيين، أو امتنعت عن سداد الاشتراكات المستحقة للصندوق خلال الأجل المنصوص عليه في المادة (١٠١)، مبلغ إضافي بنسبة (٨٪) سنوياً من إجمالي الاشتراكات الواجب سدادها.",
+                "ماذا لو أثبتت جهة العمل عدم صحة الاعتراض، ومن له الحق في معالجة الطلب حينها؟",
+                "آلية التحويل عند مغادرة العامل السلطنة؟",
+                "في حالة الصرف عن طريق الأقساط هل يتم احتساب العوائد على الرصيد المتبقي؟",
+                "هل توجد مهلة زمنية ملزمة للتسوية من خلال أصحاب العمل وماذا لو تعذّر على بعض أصحاب العمل التسوية؟",
+                "هل يتطلب التحويل موافقة العامل؟ ونفترض هنا أنه لا بد من وجود قرار يخص كل عامل إما بإقراره باستلام المبلغ وإما بتحويل المبلغ لحساب الادخار، وأيضاً لضمان الشفافية أن يتم التحويل عبر نظام حماية الأجور.",
+                "هل يوجد مسار اعتراض على الغرامات المفروضة؟",
+                "احتساب الـ 8% بسيطة أم مركبة؟ واتضح أن هناك سببين لهذا النوع من الغرامات — فهل احتساب الغرامة موحّد للسببين؟",
+                "ما هي الإجراءات عند عدم السداد؟"
+            ]
+        }
+    ];
 
-            function encodeKey(text) {
-                return btoa(unescape(encodeURIComponent(text)));
-            }
+    // ─── Helpers ──────────────────────────────────────────────────────────────
+    function encodeKey(text) {
+        return btoa(unescape(encodeURIComponent(text)));
+    }
 
-            function parseMandatoryGrouping(items) {
-                const parsed = [];
-                let currentGroup = null;
+    function loadDecisions() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+        catch (e) { return {}; }
+    }
 
-                items.forEach(item => {
-                    if (isQuestion(item)) {
-                        if (!currentGroup) {
-                            currentGroup = { service: "استفسارات عامة", inquiries: [] };
-                            parsed.push(currentGroup);
-                        }
-                        currentGroup.inquiries.push(item);
-                    } else {
-                        currentGroup = { service: item, inquiries: [] };
-                        parsed.push(currentGroup);
-                    }
-                });
+    function saveDecisions(state) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
 
-                return parsed.filter(g => g.inquiries.length > 0);
-            }
+    function renderInquiryItem(sectionTitle, serviceName, question, state) {
+        const key = encodeKey(`${sectionTitle}||${serviceName}||${question}`);
+        const status = state[key] || '';
+        const liClass = status === 'answered' ? 'inq-item answered'
+                      : status === 'deferred'  ? 'inq-item deferred'
+                      : 'inq-item';
+        return `
+            <li class="${liClass}" data-inquiry-key="${key}">
+                <div class="inq-row">
+                    <span class="inq-text">${question}</span>
+                    <span class="inq-actions">
+                        <button type="button" class="inq-status-btn ${status === 'answered' ? 'active-answered' : ''}" data-action="answered">تمت الإجابة</button>
+                        <button type="button" class="inq-status-btn ${status === 'deferred'  ? 'active-deferred'  : ''}" data-action="deferred">مؤجل</button>
+                    </span>
+                </div>
+            </li>`;
+    }
 
-            function loadDecisions() {
-                try {
-                    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-                } catch (e) {
-                    return {};
-                }
-            }
-
-            function saveDecisions(state) {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-            }
-
-            function renderInquiryItem(sectionTitle, serviceName, question, state) {
-                const keyRaw = `${sectionTitle}||${serviceName}||${question}`;
-                const key = encodeKey(keyRaw);
-                const status = state[key] || '';
-                const liClass = status === 'answered' ? 'inq-item answered' : (status === 'deferred' ? 'inq-item deferred' : 'inq-item');
-
+    function renderSection(title, badgeClass, groups, prefix, state) {
+        return `
+            <div class="inquiry-section-title">
+                <i class="fas fa-layer-group"></i>
+                <span>${title}</span>
+                <span class="badge ${badgeClass}">${groups.length} مجموعة</span>
+            </div>
+            ${groups.map((group, idx) => {
+                const collapseId = `${prefix}InqGroup${idx + 1}`;
                 return `
-                    <li class="${liClass}" data-inquiry-key="${key}">
-                        <div class="inq-row">
-                            <span class="inq-text">${question}</span>
-                            <span class="inq-actions">
-                                <button type="button" class="inq-status-btn ${status === 'answered' ? 'active-answered' : ''}" data-action="answered">تمت الإجابة</button>
-                                <button type="button" class="inq-status-btn ${status === 'deferred' ? 'active-deferred' : ''}" data-action="deferred">مؤجل</button>
-                            </span>
+                    <div class="service-inquiry-card">
+                        <div class="service-inquiry-header" data-bs-toggle="collapse"
+                             data-bs-target="#${collapseId}" aria-expanded="${idx === 0 ? 'true' : 'false'}">
+                            <span><i class="fas fa-folder-open me-2"></i>${group.service}</span>
+                            <span class="badge text-bg-light">${group.inquiries.length}</span>
                         </div>
-                    </li>
-                `;
-            }
-
-            function renderSection(title, badgeClass, groups, prefix, state) {
-                return `
-                    <div class="inquiry-section-title">
-                        <i class="fas fa-layer-group"></i>
-                        <span>${title}</span>
-                        <span class="badge ${badgeClass}">${groups.length} خدمة</span>
-                    </div>
-                    ${groups.map((group, idx) => {
-                        const collapseId = `${prefix}InqGroup${idx + 1}`;
-                        return `
-                            <div class="service-inquiry-card">
-                                <div class="service-inquiry-header" data-bs-toggle="collapse" data-bs-target="#${collapseId}" aria-expanded="${idx === 0 ? 'true' : 'false'}">
-                                    <span><i class="fas fa-folder-open me-2"></i>${group.service}</span>
-                                    <span class="badge text-bg-light">${group.inquiries.length}</span>
-                                </div>
-                                <div id="${collapseId}" class="collapse ${idx === 0 ? 'show' : ''}">
-                                    <div class="service-inquiry-body">
-                                        <ol class="service-inquiry-list">
-                                            ${group.inquiries.map(item => renderInquiryItem(title, group.service, item, state)).join('')}
-                                        </ol>
-                                    </div>
-                                </div>
+                        <div id="${collapseId}" class="collapse ${idx === 0 ? 'show' : ''}">
+                            <div class="service-inquiry-body">
+                                <ol class="service-inquiry-list">
+                                    ${group.inquiries.map(q => renderInquiryItem(title, group.service, q, state)).join('')}
+                                </ol>
                             </div>
-                        `;
-                    }).join('')}
-                `;
-            }
+                        </div>
+                    </div>`;
+            }).join('')}`;
+    }
 
-            function updateSummary() {
-                const all = container.querySelectorAll('[data-inquiry-key]').length;
-                const answered = container.querySelectorAll('.inq-item.answered').length;
-                const deferred = container.querySelectorAll('.inq-item.deferred').length;
-                const pending = all - answered - deferred;
+    function updateSummary() {
+        const all      = container.querySelectorAll('[data-inquiry-key]').length;
+        const answered = container.querySelectorAll('.inq-item.answered').length;
+        const deferred = container.querySelectorAll('.inq-item.deferred').length;
+        document.getElementById('sumAnswered').textContent = answered;
+        document.getElementById('sumDeferred').textContent = deferred;
+        document.getElementById('sumPending').textContent  = all - answered - deferred;
+    }
 
-                document.getElementById('sumAnswered').textContent = answered;
-                document.getElementById('sumDeferred').textContent = deferred;
-                document.getElementById('sumPending').textContent = pending;
-            }
+    // ─── Render ───────────────────────────────────────────────────────────────
+    const state     = loadDecisions();
+    const container = document.getElementById('groupedInquiries');
 
-            const state = loadDecisions();
-            const mandatoryParsed = parseMandatoryGrouping(mandatoryGroups[0].inquiries);
-            const container = document.getElementById('groupedInquiries');
-            container.innerHTML =
-                renderSection("استفسارات الادخار الاختياري", "text-bg-success", optionalGroups, "optional", state) +
-                renderSection("استفسارات الادخار الإلزامي", "text-bg-warning", mandatoryParsed, "mandatory", state);
-            updateSummary();
+    container.innerHTML =
+        renderSection("استفسارات مشتركة",           "text-bg-primary",  commonGroups,    "common",    state) +
+        renderSection("استفسارات الادخار الاختياري", "text-bg-success",  optionalGroups,  "optional",  state) +
+        renderSection("استفسارات الادخار الإلزامي",  "text-bg-warning",  mandatoryGroups, "mandatory", state);
 
-            container.addEventListener('click', function (e) {
-                const btn = e.target.closest('.inq-status-btn');
-                if (!btn) return;
+    updateSummary();
 
-                const li = btn.closest('[data-inquiry-key]');
-                if (!li) return;
+    // ─── Event delegation ─────────────────────────────────────────────────────
+    container.addEventListener('click', function (e) {
+        const btn = e.target.closest('.inq-status-btn');
+        if (!btn) return;
+        const li  = btn.closest('[data-inquiry-key]');
+        if (!li)  return;
 
-                const key = li.getAttribute('data-inquiry-key');
-                const action = btn.getAttribute('data-action');
-                const current = state[key] || '';
-                state[key] = current === action ? '' : action;
-                saveDecisions(state);
+        const key    = li.getAttribute('data-inquiry-key');
+        const action = btn.getAttribute('data-action');
+        state[key]   = state[key] === action ? '' : action;
+        saveDecisions(state);
 
-                const answeredBtn = li.querySelector('[data-action="answered"]');
-                const deferredBtn = li.querySelector('[data-action="deferred"]');
-
-                answeredBtn.classList.toggle('active-answered', state[key] === 'answered');
-                deferredBtn.classList.toggle('active-deferred', state[key] === 'deferred');
-                li.classList.toggle('answered', state[key] === 'answered');
-                li.classList.toggle('deferred', state[key] === 'deferred');
-                updateSummary();
-            });
-        });
-    </script>
+        li.querySelector('[data-action="answered"]').classList.toggle('active-answered', state[key] === 'answered');
+        li.querySelector('[data-action="deferred"]').classList.toggle('active-deferred',  state[key] === 'deferred');
+        li.classList.toggle('answered', state[key] === 'answered');
+        li.classList.toggle('deferred', state[key] === 'deferred');
+        updateSummary();
+    });
+});
+      </script>
 </body>
 </html>
